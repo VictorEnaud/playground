@@ -60,4 +60,4 @@ jobs:
       - name: Deploy to prod
         env:
           HEROKU_APP: ${{ secrets.HEROKU_APP }}
-        run: git push https://git.heroku.com/${{ secrets.HEROKU_APP }}.git
+        run: git push https://git.heroku.com/${{ secrets.HEROKU_APP }}.git --force
