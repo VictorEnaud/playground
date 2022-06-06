@@ -3,9 +3,11 @@ package me.victorenaud.cuzcohotel.application
 import me.victorenaud.cuzcohotel.domain.Chambre
 import me.victorenaud.cuzcohotel.domain.Chambres
 
-class RechercherChambreUseCase {
-    fun execute(): List<Chambre> {
+open class RechercherChambreUseCase {
+    open fun execute(commande: RechercherChambreCommande): List<Chambre> {
         val chambres = Chambres()
-        return chambres.disponibles()
+        return chambres.disponibles(commande.invités)
     }
 }
+
+data class RechercherChambreCommande(val invités:Int)

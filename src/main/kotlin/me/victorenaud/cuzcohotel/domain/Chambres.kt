@@ -16,5 +16,7 @@ class Chambres {
         Chambre.restore(Chambre.Snapshot(2, "304", "3", "2 single beds - shared bathroom")),
     )
 
-    fun disponibles() = chambres
+    fun disponibles(invités: Int): List<Chambre> {
+        return chambres.filter { chambre -> chambre.peutAccueillir(invités) }
+    }
 }

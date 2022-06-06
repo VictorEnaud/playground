@@ -1,40 +1,61 @@
 package me.victorenaud.cuzcohotel.infrastructure.primaryAdapters
 
-import org.hamcrest.Matchers.hasSize
+import me.victorenaud.cuzcohotel.application.RechercherChambreCommande
+import me.victorenaud.cuzcohotel.application.RechercherChambreUseCase
+import me.victorenaud.cuzcohotel.domain.Chambre
+import org.hamcrest.Matchers
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.mockito.Mock
+import org.mockito.junit.jupiter.MockitoExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import org.hamcrest.Matchers.`is` as Is
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.mockito.Mockito.`when` as When
 
-@ExtendWith(SpringExtension::class)
-@AutoConfigureMockMvc
-@SpringBootTest
+
+@ExtendWith(MockitoExtension::class)
 internal class RechercheControllerTest {
-    @Autowired
     private lateinit var mvc: MockMvc
 
+    @Mock private lateinit var rechercherChambreUseCase: RechercherChambreUseCase
+
+    @BeforeEach
+    fun setUp() {
+        mvc = MockMvcBuilders.standaloneSetup(
+            RechercheController(
+                rechercherChambreUseCase,
+            )
+        )
+            .build()
+    }
+
     @Test
-    fun `lors d'une recherche renvoie toutes les chambres disponibles`() {
+    internal fun `Quand un recherche est faite renvoie 200 et la liste des chambres disponibles`() {
+        // Given
+        val nombreDInvités = 3
+        val chambresAttendues = listOf(
+            Chambre.restore(Chambre.Snapshot(4, "102", "1", "2 queen size beds - A/C - Wi-Fi - private bathroom - wheelchair accessible")),
+            Chambre.restore(Chambre.Snapshot(3, "103", "1", "3 single beds - A/C - Wi-Fi - private bathroom - wheelchair accessible")),
+        )
+        When(rechercherChambreUseCase.execute(RechercherChambreCommande(nombreDInvités)))
+            .thenReturn(chambresAttendues)
+
         // When
-        mvc.perform(MockMvcRequestBuilders.get("/api/v0/recherche"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/v0/recherche?invités=$nombreDInvités"))
 
             // Then
             .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(jsonPath<List<Any>>("$", hasSize(12)))
-            .andExpect(jsonPath<String>("$[0].étage", Is("1")))
-            .andExpect(jsonPath<String>("$[0].numéro", Is("101")))
-            .andExpect(jsonPath<Int>("$[0].capacité", Is(2)))
+            .andExpect(MockMvcResultMatchers.jsonPath<List<Any>>("$", Matchers.hasSize(2)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].étage", Matchers.`is`("1")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].numéro", Matchers.`is`("102")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].capacité", Matchers.`is`(4)))
             .andExpect(
-                jsonPath<String>(
+                MockMvcResultMatchers.jsonPath(
                     "$[0].description",
-                    Is("1 king size bed - A/C - Wi-Fi - private bathroom - wheelchair accessible")
+                    Matchers.`is`("2 queen size beds - A/C - Wi-Fi - private bathroom - wheelchair accessible")
                 )
             )
     }
