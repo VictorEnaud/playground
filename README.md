@@ -10,7 +10,8 @@
 
 Liste des domaines de l'application
 
-- 
+- Recherche
+- Réservation
 
 ### DDD
 
@@ -30,7 +31,7 @@ Liste des domaines de l'application
 [] Déployer quelque part
 [] Correlation-id
 [] RabbitsMQ pour le messaging entre composants
-[] Structured logging logging
+[] Structured logging
 [] Configuration/Environnement
 [] Feature flags
 [] S'isoler de springboot
