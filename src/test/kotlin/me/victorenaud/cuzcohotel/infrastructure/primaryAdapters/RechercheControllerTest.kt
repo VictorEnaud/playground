@@ -1,6 +1,6 @@
 package me.victorenaud.cuzcohotel.infrastructure.primaryAdapters
 
-import org.assertj.core.api.Assertions.assertThat
+import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,6 +10,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.hamcrest.Matchers.`is` as Is
 
 @ExtendWith(SpringExtension::class)
 @AutoConfigureMockMvc
@@ -19,17 +21,21 @@ internal class RechercheControllerTest {
     private lateinit var mvc: MockMvc
 
     @Test
-    @Throws(Exception::class)
-    fun `lors d'une recherche répond "bonjour le monde !"`() {
+    fun `lors d'une recherche renvoie toutes les chambres disponibles`() {
         // When
-        val response = mvc.perform(MockMvcRequestBuilders.get("/api/v0/recherche"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/v0/recherche"))
 
             // Then
             .andExpect(MockMvcResultMatchers.status().isOk)
-            .andReturn()
-            .response
-            .contentAsString
-
-        assertThat(response).isEqualTo("Bonjour le monde !")
+            .andExpect(jsonPath<List<Any>>("$", hasSize(12)))
+            .andExpect(jsonPath<String>("$[0].étage", Is("1")))
+            .andExpect(jsonPath<String>("$[0].numéro", Is("101")))
+            .andExpect(jsonPath<Int>("$[0].capacité", Is(2)))
+            .andExpect(
+                jsonPath<String>(
+                    "$[0].description",
+                    Is("1 king size bed - A/C - Wi-Fi - private bathroom - wheelchair accessible")
+                )
+            )
     }
 }
