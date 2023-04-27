@@ -23,25 +23,51 @@ Liste des domaines de l'application
 ### Infrastructure
 
 [] Exposer sur une API
+[] Implémenter une authentification
+[] Implémenter des rôles
 [] HATEOAS
 [] Swagger
 [] Implémenter la persistence
+[] Feature flags
+
+### Front-end
+
+[] Avoir un frontend SPA
+[] Avoir un frontend MPA
+[] Avoir un frontend avec hotwired
+[] Comparer SPA, MPA et hotwired
+
+### Séparation des bounded-contexts
+
+[] Essayer JPMS
+[] Essayer Modulith
+[] Essayer le multi-modules
+[] Comparer JPMS, Modulith et le multi-modules
+
+### Déploiement
+
 [] Définir la ci/cd
 [] Dockeriser l'application
 [] Déployer quelque part
-[] Correlation-id
-[] RabbitsMQ pour le messaging entre composants
-[] Structured logging
 [] Configuration/Environnement
-[] Feature flags
-[] S'isoler de springboot
+
+### Outillage
+
+[] Pouvoir lister les dépendances à mettre à jour
+[] Pouvoir lister les vulnérabilités
+[] Avoir un linter
+[] Imposer un format de commit
+
+### Observabilité
+
+[] Correlation-id
+[] Essayer OpenTelemetry
+[] Structured logging
 
 ### Architecture
 
 [] Distinguer read/write
-[] Faire de la clean architecture
 [] Modulariser le monolithe en s'appuyant sur les bounded contexts
-[] Déléguer aux bounded-context l'enregistrement des apis, gestionnaires, etc.
 [] Implémenter de l'event sourcing
 [] Persistence des messages
 [] Optimistic concurrency
@@ -61,8 +87,10 @@ Liste des domaines de l'application
 [] Générer un bounded context Canvas
 [] Associer les commandes aux évènements émis
 [] Associer les questions aux modèles de lecture
+[] Générer automatiquement le changelog
 
 ### Tests
 
-[] Faire des tests end to end
-[] Avoir des tests utilisables par un QA
+[] Documenter la pyramide de tests
+[] Implémenter testcontainers
+[] Contract testing
