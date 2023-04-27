@@ -1,4 +1,4 @@
-name: Deploy
+name: Test
 
 on:
   push:
@@ -15,6 +15,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+          cache: gradle
       - name: Build
         uses: gradle/gradle-build-action@v2
         with:
@@ -31,6 +32,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+          cache: gradle
       - name: Test
         uses: gradle/gradle-build-action@v2
         with:
