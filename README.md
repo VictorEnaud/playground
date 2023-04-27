@@ -46,17 +46,18 @@ Liste des domaines de l'application
 
 ### Déploiement
 
-[] Définir la ci/cd
+[] Définir la CI/CD
 [] Dockeriser l'application
 [] Déployer quelque part
 [] Configuration/Environnement
 
 ### Outillage
 
-[] Pouvoir lister les dépendances à mettre à jour
+[x] Pouvoir lister les dépendances à mettre à jour
 [] Pouvoir lister les vulnérabilités
 [] Avoir un linter
 [] Imposer un format de commit
+[x] Introduire un Makefile
 
 ### Observabilité
 
