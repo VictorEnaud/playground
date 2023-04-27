@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+changedFiles=$(git status --porcelain --no-renames)
+
+format_java_files() {
+    echo "Java files modified, running spotlessCheck"
+    ./gradlew spotlessCheck &> /dev/null
+    gradleExitCode=$?
+
+    if [ $gradleExitCode -ne 0 ]
+    then
+      echo
+      echo "=========="
+      echo "Failure: Some files are not correctly formatted, run spotlessApply"
+      echo "=========="
+      echo
+      return 1
+    fi
+}
+
+formatJavaExitCode=0
+containsJavaFiles=false
+
+while read gitFileStatus changedFile; do
+  # skip deleted files
+
+  if [ "$gitFileStatus" == 'D' ]; then continue; fi
+
+  if [[ "$changedFile" =~ ".java" ]]; then
+    containsJavaFiles=true
+  fi
+
+done <<<"$changedFiles"
+
+if [ $containsJavaFiles == true ] ; then
+    format_java_files
+    formatJavaExitCode=$?
+fi
+
+if [[ $formatJavaExitCode -ne 0 ]]; then
+  echo
+  echo "Format pre-commit failed"
+  exit 1
+fi
+exit 0

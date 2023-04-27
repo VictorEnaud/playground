@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+NO_COLOR='\033[0m'
+
+relevant_branch='main'
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+perform_application_checks() {
+    if [ "$current_branch" = "$relevant_branch" ]
+    then
+      prevent_wip_commits
+      run_tests
+    fi
+    exit 0
+}
+
+prevent_wip_commits() {
+  git log origin/$relevant_branch..$relevant_branch --format="%s" | grep wip > /dev/null
+  local result=$?
+  if [ "$result" -eq "0" ]
+  then
+    echo "Error: a commit you are pushing contains 'wip'"
+    exit 1
+  fi
+}
+
+run_tests() {
+  run_api_tests
+}
+
+run_api_tests() {
+    echo -e "\n${GREEN} Starting api test suite...${NO_COLOR}\n"
+    make test-api
+
+    # store the exit code in a variable
+    RESULT_API=$?
+    if [ "$RESULT_API" -eq "0" ]
+    then
+      echo -e "\n${GREEN} api tests all green!${NO_COLOR}\n"
+    else
+      echo -e "\n${RED} api tests failed...${NO_COLOR}\n"
+      exit $RESULT_API
+    fi
+}
+
+perform_application_checks

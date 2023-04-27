@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Don't apply this logic if we are in a 'detached head' state (rebasing, read-only history, etc)
+# in a detached head '--show-current' will return nothing
+if [ "$(git branch --show-current | wc -l)" == 0 ]; then
+  exit 0
+fi
+
+MESSAGE=$(cat $1)
+COMMIT_FORMAT=".*(build|ci|docs|feat|fix|perf|refactor|revert|style|tech|test|chore|wip|release)(\(.*\))?: (.+)$"
+
+if ! [[ "$MESSAGE" =~ $COMMIT_FORMAT ]]; then
+  echo ""
+  echo "❌ Commit failed: commit message format is invalid"
+  echo ""
+  echo "Please use the following format:"
+  echo ""
+  echo "  ✅ ci: execute tests on main branch"
+  echo "  ✅ refactor(person): rename address into location"
+  echo "  ✅ feat(AC-120): add email to signup process"
+  echo ""
+  echo "Allowed prefixes: build, chore, ci, docs, feat, fix, perf, refactor, revert, style, tech, test, wip"
+  echo ""
+  echo "More details in the CONTRIBUTING: https://git.grouperci.com/irn-74181/backend/-/blob/main/doc/CONTRIBUTING.md"
+  exit 1
+fi

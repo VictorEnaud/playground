@@ -56,7 +56,7 @@ Liste des domaines de l'application
 [x] Pouvoir lister les dépendances à mettre à jour
 [] Pouvoir lister les vulnérabilités
 [] Avoir un linter
-[] Imposer un format de commit
+[x] Imposer un format de commit
 [x] Introduire un Makefile
 
 ### Observabilité
