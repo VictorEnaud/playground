@@ -1,4 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.benmanes.gradle.versions.reporter.HtmlReporter
+import com.github.benmanes.gradle.versions.reporter.PlainTextReporter
+import com.github.benmanes.gradle.versions.reporter.result.Result
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import java.io.FileOutputStream
+import java.io.PrintStream
 
 plugins {
     id("org.springframework.boot") version "2.6.2"
@@ -41,4 +47,26 @@ tasks.withType<Test> {
 
 tasks.jar {
     enabled = false
+}
+
+tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
+    checkForGradleUpdate = true
+    outputDir = "build/reports"
+    reportfileName = "dependency-updates-report"
+    gradleReleaseChannel = "current"
+    outputFormatter = closureOf<Result> {
+        if (!this.outdated.dependencies.isEmpty()) {
+            mkdir(outputDir)
+            val outputFile = File(outputDir, "$reportfileName.html")
+            val outputFileOutputStream = FileOutputStream(outputFile)
+            val htmlReporter = HtmlReporter(project, revision, gradleReleaseChannel)
+
+            outputFileOutputStream.use { out: FileOutputStream ->  htmlReporter.write(PrintStream(out), this) }
+
+            val consoleReporter = PlainTextReporter(project, revision, gradleReleaseChannel)
+            consoleReporter.write(System.out, this)
+
+            throw GradleException("Abort, there are dependencies to update.")
+        }
+    }
 }
