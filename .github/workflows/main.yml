@@ -35,29 +35,3 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: test
-
-  deployment:
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Heroku login credentials
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-        run: |
-          cat > ~/.netrc <<EOF
-            machine api.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_KEY
-            machine git.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_KEY
-          EOF
-      - name: Deploy to prod
-        env:
-          HEROKU_APP: ${{ secrets.HEROKU_APP }}
-        run: git push https://git.heroku.com/${{ secrets.HEROKU_APP }}.git --force

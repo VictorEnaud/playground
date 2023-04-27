@@ -46,7 +46,8 @@ Liste des domaines de l'application
 
 ### Déploiement
 
-[] Définir la CI/CD
+[x] Définir la CI
+[] Définir la CD
 [] Dockeriser l'application
 [] Déployer quelque part
 [] Configuration/Environnement
