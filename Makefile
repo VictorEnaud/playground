@@ -26,4 +26,7 @@ format-api: ## Format api files
 
 ##@ Dependency management
 check-updates: ## Check available updates
-	./gradlew dependencyUpdates
+	./gradlew --build-cache dependencyUpdates
+
+check-vulnerabilities: ## Check dependencies vulnerabilities
+	./gradlew --build-cache dependencyCheckAnalyze

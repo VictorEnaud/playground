@@ -54,7 +54,7 @@ Liste des domaines de l'application
 ### Outillage
 
 [x] Pouvoir lister les dépendances à mettre à jour
-[] Pouvoir lister les vulnérabilités
+[x] Pouvoir lister les vulnérabilités
 [] Avoir un linter
 [x] Imposer un format de commit
 [x] Introduire un Makefile

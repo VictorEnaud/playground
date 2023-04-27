@@ -10,6 +10,7 @@ plugins {
     id("org.springframework.boot") version "3.0.6"
     id("io.spring.dependency-management") version "1.1.0"
     id("com.github.ben-manes.versions") version "0.46.0"
+    id("org.owasp.dependencycheck") version "8.2.1"
     kotlin("jvm") version "1.8.21"
     kotlin("plugin.spring") version "1.8.21"
 }
@@ -32,6 +33,11 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
+}
+
+dependencyCheck {
+    failBuildOnCVSS = 4F
+    suppressionFile = "owasp-vulnerabilities-suppression.xml"
 }
 
 tasks.withType<KotlinCompile> {
