@@ -3,14 +3,14 @@ package me.victorenaud.cuzcohotel.application
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class RechercherChambreUseCaseTest {
+internal class RechercherChambresDisponiblesUseCaseTest {
     @Test
     internal fun `renvoie toutes les chambres quand toutes sont disponibles`() {
         // Given
-        val rechercherChambreUseCase = RechercherChambreUseCase()
+        val rechercherChambresDisponiblesUseCase = RechercherChambresDisponiblesUseCase()
 
         // When
-        val chambresDisponibles = rechercherChambreUseCase.execute(RechercherChambreCommande(1))
+        val chambresDisponibles = rechercherChambresDisponiblesUseCase.execute(RechercherChambreCommande(1))
 
         // Then
         assertThat(chambresDisponibles).hasSize(12)
@@ -21,11 +21,11 @@ internal class RechercherChambreUseCaseTest {
     @Test
     internal fun `renvoie uniquement les chambres qui ont assez de capacité d'accueil`() {
         // Given
-        val rechercherChambreUseCase = RechercherChambreUseCase()
+        val rechercherChambresDisponiblesUseCase = RechercherChambresDisponiblesUseCase()
         val rechercherChambreCommande = RechercherChambreCommande(3)
 
         // When
-        val chambresDisponibles = rechercherChambreUseCase.execute(rechercherChambreCommande)
+        val chambresDisponibles = rechercherChambresDisponiblesUseCase.execute(rechercherChambreCommande)
 
         // Then
         assertThat(chambresDisponibles).extracting("numéro")

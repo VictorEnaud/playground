@@ -1,7 +1,7 @@
 package me.victorenaud.cuzcohotel.infrastructure.primaryAdapters
 
 import me.victorenaud.cuzcohotel.application.RechercherChambreCommande
-import me.victorenaud.cuzcohotel.application.RechercherChambreUseCase
+import me.victorenaud.cuzcohotel.application.RechercherChambresDisponiblesUseCase
 import me.victorenaud.cuzcohotel.domain.Chambre
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.BeforeEach
@@ -20,13 +20,13 @@ import org.mockito.Mockito.`when` as When
 internal class RechercheControllerTest {
     private lateinit var mvc: MockMvc
 
-    @Mock private lateinit var rechercherChambreUseCase: RechercherChambreUseCase
+    @Mock private lateinit var rechercherChambresDisponiblesUseCase: RechercherChambresDisponiblesUseCase
 
     @BeforeEach
     fun setUp() {
         mvc = MockMvcBuilders.standaloneSetup(
             RechercheController(
-                rechercherChambreUseCase,
+                rechercherChambresDisponiblesUseCase,
             )
         )
             .build()
@@ -40,7 +40,7 @@ internal class RechercheControllerTest {
             Chambre.restore(Chambre.Snapshot(4, "102", "1", "2 queen size beds - A/C - Wi-Fi - private bathroom - wheelchair accessible")),
             Chambre.restore(Chambre.Snapshot(3, "103", "1", "3 single beds - A/C - Wi-Fi - private bathroom - wheelchair accessible")),
         )
-        When(rechercherChambreUseCase.execute(RechercherChambreCommande(nombreDInvités)))
+        When(rechercherChambresDisponiblesUseCase.execute(RechercherChambreCommande(nombreDInvités)))
             .thenReturn(chambresAttendues)
 
         // When
