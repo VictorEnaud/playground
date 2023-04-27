@@ -23,3 +23,7 @@ test-api: ## Run API tests
 ##@ Format & fix
 format-api: ## Format api files
 	./gradlew spotlessApply
+
+##@ Dependency management
+check-updates: ## Check available updates
+	./gradlew dependencyUpdates
