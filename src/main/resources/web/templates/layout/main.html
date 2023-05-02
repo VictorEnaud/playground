@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="fr">
+<head>
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE">Playground</title>
+</head>
+<body>
+<header><img th:src="@{/icons/logo.svg}"/>
+    <div class='title'>Hotel Cuzco</div>
+</header>
+<main layout:fragment="content">
+</main>
+<footer>
+    <p>Cuzco Hotel inc.</p>
+</footer>
+</body>
+</html>

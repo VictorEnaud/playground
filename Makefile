@@ -14,7 +14,7 @@ help: ## Show this help
 
 ##@ Start a component
 start-api: ## Start API
-	./gradlew bootRun
+	./gradlew bootRun --args='--spring.profiles.active=local'
 
 ##@ Run the tests
 test-api: ## Run API tests

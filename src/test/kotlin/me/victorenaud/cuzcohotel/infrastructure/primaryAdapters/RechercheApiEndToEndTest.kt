@@ -16,7 +16,7 @@ import org.hamcrest.Matchers.`is` as Is
 @ExtendWith(SpringExtension::class)
 @AutoConfigureMockMvc
 @SpringBootTest
-internal class RechercheEndToEndTest {
+internal class RechercheApiEndToEndTest {
     @Autowired
     private lateinit var mvc: MockMvc
 

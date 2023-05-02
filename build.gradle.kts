@@ -1,8 +1,8 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.github.benmanes.gradle.versions.reporter.HtmlReporter
 import com.github.benmanes.gradle.versions.reporter.PlainTextReporter
 import com.github.benmanes.gradle.versions.reporter.result.Result
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.FileOutputStream
 import java.io.PrintStream
 
@@ -25,6 +25,8 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -67,7 +69,7 @@ tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
             val outputFileOutputStream = FileOutputStream(outputFile)
             val htmlReporter = HtmlReporter(project, revision, gradleReleaseChannel)
 
-            outputFileOutputStream.use { out: FileOutputStream ->  htmlReporter.write(PrintStream(out), this) }
+            outputFileOutputStream.use { out: FileOutputStream -> htmlReporter.write(PrintStream(out), this) }
 
             val consoleReporter = PlainTextReporter(project, revision, gradleReleaseChannel)
             consoleReporter.write(System.out, this)

@@ -3,6 +3,7 @@ package me.victorenaud.cuzcohotel.infrastructure.primaryAdapters
 import me.victorenaud.cuzcohotel.application.RechercherChambreCommande
 import me.victorenaud.cuzcohotel.application.RechercherChambresDisponiblesUseCase
 import me.victorenaud.cuzcohotel.domain.Chambre
+import me.victorenaud.cuzcohotel.infrastructure.primaryAdapters.api.RechercheApiController
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,7 +18,7 @@ import org.mockito.Mockito.`when` as When
 
 
 @ExtendWith(MockitoExtension::class)
-internal class RechercheControllerTest {
+internal class RechercheApiControllerTest {
     private lateinit var mvc: MockMvc
 
     @Mock private lateinit var rechercherChambresDisponiblesUseCase: RechercherChambresDisponiblesUseCase
@@ -25,7 +26,7 @@ internal class RechercheControllerTest {
     @BeforeEach
     fun setUp() {
         mvc = MockMvcBuilders.standaloneSetup(
-            RechercheController(
+            RechercheApiController(
                 rechercherChambresDisponiblesUseCase,
             )
         )

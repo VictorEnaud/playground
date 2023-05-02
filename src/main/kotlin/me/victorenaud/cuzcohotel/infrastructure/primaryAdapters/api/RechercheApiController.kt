@@ -1,4 +1,4 @@
-package me.victorenaud.cuzcohotel.infrastructure.primaryAdapters
+package me.victorenaud.cuzcohotel.infrastructure.primaryAdapters.api
 
 import me.victorenaud.cuzcohotel.application.RechercherChambreCommande
 import me.victorenaud.cuzcohotel.application.RechercherChambresDisponiblesUseCase
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(value = ["/api/v0/recherche"])
-class RechercheController(val rechercherChambresDisponiblesUseCase: RechercherChambresDisponiblesUseCase) {
+class RechercheApiController(val rechercherChambresDisponiblesUseCase: RechercherChambresDisponiblesUseCase) {
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     fun recherche(@RequestParam invités: Int): List<Chambre> {
         return rechercherChambresDisponiblesUseCase.execute(RechercherChambreCommande(invités))

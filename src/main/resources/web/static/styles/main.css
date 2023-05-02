@@ -1,0 +1,60 @@
+html {
+  font-family: "roboto_regular", Arial, sans-serif;
+  height: 100%;
+}
+
+body {
+  display: grid;
+  grid-template-columns: [body-start] 200px [main-start] 1fr [main-end] 200px [body-end];
+  grid-template-rows: [body-start] 60px [main-start] 1fr [main-end] 100px [body-end];
+  height: 100%;
+  margin: 0;
+}
+
+header {
+  background-color: #1976d2;
+  grid-row-start: body-start;
+  grid-row-end: main-start;
+  grid-column-start: body-start;
+  grid-column-end: body-end;
+
+  align-items: center;
+  display: flex;
+  padding-left: 200px;
+}
+
+header .title {
+  color: white;
+  font-size: 2rem;
+}
+
+header img {
+  padding-right: 10px;
+  height: 40px;
+}
+
+header .title b {
+  text-transform: uppercase;
+}
+
+main {
+  grid-row-start: main-start;
+  grid-row-end: main-end;
+  grid-column-start: main-start;
+  grid-column-end: main-end;
+}
+
+footer {
+  background-color: #63a4ff;
+  grid-row-start: main-end;
+  grid-row-end: body-end;
+  grid-column-start: body-start;
+  grid-column-end: body-end;
+
+  display: grid;
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 20px;
+  grid-template-columns: 1fr 1fr 1fr;
+  font-weight: bold;
+}
